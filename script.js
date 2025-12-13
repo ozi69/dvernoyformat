@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Элементы для галереи
   const worksImages = document.querySelectorAll('.works-img');
-  const loadMoreBtn = document.querySelector('.btn-work');
   
   // Элементы модального окна
   const modal = document.getElementById('imageModal');
@@ -11,13 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const nextBtn = document.getElementById('nextBtn');
   const imageCounter = document.getElementById('imageCounter');
   
-  // Настройки галереи
-  const DESKTOP_STEP = 8;
-  const MOBILE_STEP = 4;
-  
-  let visibleCount = 0;
   let currentImageIndex = 0;
-  let visibleImages = [];
   
   // Переменные для свайпов
   let touchStartX = 0;
@@ -29,27 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     return window.innerWidth <= 768;
   }
   
-  // Получаем шаг в зависимости от ширины экрана
-  function getStep() {
-    return isMobile() ? MOBILE_STEP : DESKTOP_STEP;
-  }
-  
-  // Показать изображения в галерее
-  function showGalleryImages(count) {
-    visibleImages = [];
-    
-    for (let i = 0; i < count && i < worksImages.length; i++) {
-      worksImages[i].classList.add('visible');
-      visibleImages.push(worksImages[i]);
-    }
-    
-    visibleCount = Math.min(count, worksImages.length);
-    
-    if (visibleCount >= worksImages.length) {
-      loadMoreBtn.disabled = true;
-      loadMoreBtn.textContent = 'Все работы показаны';
-    }
-    
+  // Показать все изображения сразу
+  function showAllImages() {
+    worksImages.forEach(imgContainer => {
+      imgContainer.style.display = 'block';
+    });
     addImageClickHandlers();
   }
   
@@ -121,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  // Обработчики свайпов для мобильных
+  // Обработчики свайпов для мобильных (модальное окно)
   function handleTouchStart(e) {
     touchStartX = e.changedTouches[0].screenX;
     isSwiping = true;
@@ -129,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function handleTouchMove(e) {
     if (!isSwiping) return;
-    e.preventDefault(); // Предотвращаем прокрутку страницы
+    e.preventDefault();
   }
   
   function handleTouchEnd(e) {
@@ -139,12 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const swipeThreshold = 50;
     
     if (touchEndX < touchStartX - swipeThreshold) {
-      // Свайп влево = следующее изображение
       nextImage();
     }
     
     if (touchEndX > touchStartX + swipeThreshold) {
-      // Свайп вправо = предыдущее изображение
       prevImage();
     }
     
@@ -170,20 +145,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Инициализация галереи
   function initGallery() {
-    const initialCount = getStep();
-    showGalleryImages(initialCount);
-  }
-  
-  // Показать еще изображений
-  function showMore() {
-    if (!loadMoreBtn.disabled) {
-      const step = getStep();
-      showGalleryImages(visibleCount + step);
-    }
+    showAllImages();
   }
   
   // Назначаем обработчики событий
-  loadMoreBtn.addEventListener('click', showMore);
+  
+  // Модальное окно
   closeModal.addEventListener('click', closeModalWindow);
   
   modal.addEventListener('click', function(e) {
@@ -206,12 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Обработчик изменения размера окна
   window.addEventListener('resize', function() {
-    const initialCount = getStep();
-    if (visibleCount < initialCount) {
-      showGalleryImages(initialCount);
-    }
-    
-    // При ресайзе обновляем видимость кнопок
+    // При ресайзе обновляем видимость кнопок модального окна
     if (modal.classList.contains('active')) {
       if (isMobile()) {
         prevBtn.style.display = 'none';
@@ -231,75 +193,102 @@ document.addEventListener('DOMContentLoaded', function() {
 // ------------- карусель
 
 document.addEventListener("DOMContentLoaded", function () {
-  const slides = document.querySelectorAll(".box-img");
-  const containerSlider = document.querySelector(".block-slider");
-  const prevBtn = document.querySelector(".nav__slider-prev");
-  const nextBtn = document.querySelector(".nav__slider-next");
-
-  let currentIndex = 0;
-
-  // Функция обновления слайдов
-  function updateSlider() {
-    const slideWidth = slides[0].offsetWidth; // Ширина одного слайда
-    const gap = 20; // 2rem в пикселях (предположительно)
-    
-    // Устанавливаем задержку перед прокруткой
-    setTimeout(() => {
-      containerSlider.scrollTo({
-        left: currentIndex * (slideWidth + gap),
-        behavior: 'smooth'
-      });
-    }, 150);
-
-    // Блокировка кнопок на крайних слайдах
-    if (prevBtn && nextBtn) {
-      prevBtn.style.opacity = currentIndex === 0 ? "0.5" : "1";
-      nextBtn.style.opacity = currentIndex === slides.length - 1 ? "0.5" : "1";
-      prevBtn.style.pointerEvents = currentIndex === 0 ? "none" : "auto";
-      nextBtn.style.pointerEvents = currentIndex === slides.length - 1 ? "none" : "auto";
-    }
-  }
-
-  // Обработчик кнопки "Вперед"
-  if (nextBtn) {
-    nextBtn.addEventListener("click", function () {
-      if (currentIndex < slides.length - 1) {
-        currentIndex++;
-        updateSlider();
-      }
-    });
-  }
-
-  // Обработчик кнопки "Назад"
-  if (prevBtn) {
-    prevBtn.addEventListener("click", function () {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateSlider();
-      }
-    });
-  }
-
-  // Обработчик клика по слайду (делает его активным)
-  slides.forEach((slide, index) => {
-    slide.addEventListener("click", function () {
-      currentIndex = index;
-      updateSlider();
-    });
+  // Инициализация первого слайдера (блок с .block-slider)
+  initSlider({
+    containerSelector: '.block-slider',
+    slideSelector: '.box-img',
+    prevBtnSelector: '.nav__slider-prev',
+    nextBtnSelector: '.nav__slider-next'
   });
-  
-  // Для Webkit браузеров
-  containerSlider.addEventListener('wheel', function(e) {
-    if (e.deltaY !== 0) {
-      e.preventDefault();
-      containerSlider.scrollLeft += e.deltaY;
+
+  // Инициализация второго слайдера (блок Наши работы)
+  initSlider({
+    containerSelector: '.container-works',
+    slideSelector: '.works-img',
+    prevBtnSelector: '.nav__works-prev',
+    nextBtnSelector: '.nav__works-next'
+  });
+
+  // Универсальная функция для инициализации слайдера
+  function initSlider(config) {
+    const slides = document.querySelectorAll(config.slideSelector);
+    const containerSlider = document.querySelector(config.containerSelector);
+    const prevBtn = document.querySelector(config.prevBtnSelector);
+    const nextBtn = document.querySelector(config.nextBtnSelector);
+
+    // Если элементов нет - выходим
+    if (!slides.length || !containerSlider) return;
+
+    let currentIndex = 0;
+    const gap = 20; // 2rem в пикселях
+
+    // Функция обновления слайдов
+    function updateSlider() {
+      const slideWidth = slides[0].offsetWidth;
+      
+      setTimeout(() => {
+        containerSlider.scrollTo({
+          left: currentIndex * (slideWidth + gap),
+          behavior: 'smooth'
+        });
+      }, 150);
+
+      // Блокировка кнопок на крайних слайдах
+      if (prevBtn && nextBtn) {
+        prevBtn.style.opacity = currentIndex === 0 ? "0.5" : "1";
+        nextBtn.style.opacity = currentIndex === slides.length - 1 ? "0.5" : "1";
+        prevBtn.style.pointerEvents = currentIndex === 0 ? "none" : "auto";
+        nextBtn.style.pointerEvents = currentIndex === slides.length - 1 ? "none" : "auto";
+      }
     }
-  }, { passive: false });
 
-  // Устанавливаем первый слайд активным при загрузке
-  updateSlider();
+    // Обработчик кнопки "Вперед"
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        if (currentIndex < slides.length - 1) {
+          currentIndex++;
+          updateSlider();
+        }
+      });
+    }
+
+    // Обработчик кнопки "Назад"
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        if (currentIndex > 0) {
+          currentIndex--;
+          updateSlider();
+        }
+      });
+    }
+
+    // Обработчик клика по слайду (делает его активным)
+    slides.forEach((slide, index) => {
+      slide.addEventListener("click", function () {
+        currentIndex = index;
+        updateSlider();
+      });
+    });
+    
+    // Для Webkit браузеров - горизонтальная прокрутка колесиком
+    containerSlider.addEventListener('wheel', function(e) {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        containerSlider.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+
+    // Инициализация слайдера
+    updateSlider();
+
+    // Обновление при изменении размера окна
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateSlider, 250);
+    });
+  }
 });
-
 
 // -------------- для блока с вопросами
 document.addEventListener('DOMContentLoaded', function() {
@@ -538,3 +527,7 @@ document.addEventListener('DOMContentLoaded', function() {
     link.addEventListener('click', closeMenu);
   });
 });
+
+
+
+
