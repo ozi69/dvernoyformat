@@ -1,16 +1,25 @@
 :root {
   --color-white: rgb(255, 255, 255);
   --color-gray: rgb(234, 234, 234);
+  --color-gray-alt1: rgba(245, 245, 245, 1);
+  --color-gray-alt2: rgba(101, 101, 101, 1);
+  --color-gray-alt3: rgba(249, 249, 249, 1);
+  --color-gray-alt4: rgba(132, 132, 132, 1);
+  --color-gray-alt5: rgba(96, 96, 96, 1);
   --color-black: #000;
+  --color-black-alt: rgba(67, 67, 67, 1);
+  --color-black-alt2: rgba(39, 39, 39, 1);
 
   --border-r64: 6.4rem;
   --border-r32: 3.2rem;
+  --border-r24: 2.4rem;
   --border-r16: 1.6rem;
 
   --color-orange: rgb(255, 102, 0);
   --color-orange-alt: rgb(255, 143, 68);
   --color-orange-alt2: rgb(197, 79, 0);
   --color-orange-alt3: rgba(255, 102, 0, 0.1);
+  --color-orange-alt4: rgba(255, 248, 237, 1);
 }
 
 *,
@@ -81,7 +90,7 @@ input[type="search"]::-ms-clear {
 }
 
 body {
-  padding-top: 10rem;
+  padding-top: 12rem;
 
   @media (max-width: 768px) {
     padding-top: 5rem;
@@ -92,9 +101,9 @@ html,
 body {
   height: 100%;
   line-height: 1;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter Tight;
 
-  font-size: 0.5208335vw;
+  font-size: 0.6944444vw;
 
   @media (max-width: 768px) {
     font-size: 1.5625vw;
@@ -110,7 +119,7 @@ body {
 }
 
 ._container {
-  padding: 9rem 35rem;
+  padding: 9rem 7.2rem;
   position: relative;
 
   @media (max-width: 768px) {
@@ -118,15 +127,23 @@ body {
   }
 }
 ._container-alt {
-  padding: 4.5rem 15rem;
+  padding: 0rem 7.2rem;
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 4rem 1.6rem;
+    padding: 4.5rem 1.6rem;
+  }
+}
+._container-alt2 {
+  padding: 9rem 14rem;
+  position: relative;
+
+  @media (max-width: 768px) {
+    padding: 4.5rem 1.6rem;
   }
 }
 .header {
-  padding: 2rem 35rem;
+  padding: 2rem 7.5rem;
   width: 100%;
   position: fixed;
   top: 0;
@@ -138,21 +155,11 @@ body {
     padding: 1rem 1.6rem;
   }
 }
-.footer {
-  padding: 6rem 35rem;
-  position: relative;
-
-  background-color: var(--color-black);
-
-  @media (max-width: 768px) {
-    padding: 4rem 1.6rem 2rem;
-  }
-}
 .btn-primary {
   border-radius: var(--border-r32);
-  border: 0.2rem solid var(--color-orange);
+  border: 0.1rem solid var(--color-orange);
   background-color: var(--color-white);
-  padding: 1.5rem 4rem;
+  padding: 1.4rem 4rem;
   color: var(--color-orange);
 
   font-weight: 600;
@@ -176,7 +183,7 @@ body {
 .btn-second {
   border-radius: var(--border-r32);
   background-color: var(--color-orange);
-  padding: 1.5rem 4rem;
+  padding: 1.4rem 4rem;
   color: var(--color-white);
 
   font-weight: 600;
@@ -197,20 +204,4 @@ body {
 .btn-second:active {
   background-color: var(--color-orange-alt2);
   color: var(--color-white);
-}
-.nav__slider-btn {
-  background-color: var(--color-orange);
-  color: var(--color-white);
-  font-size: 3rem;
-  width: 4rem;
-  height: 4rem;
-
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.nav__slider-btn:hover {
-  background-color: var(--color-orange-alt);
 }

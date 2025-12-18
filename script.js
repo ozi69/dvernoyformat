@@ -189,107 +189,6 @@ document.addEventListener('DOMContentLoaded', function() {
   initGallery();
 });
 
-
-// ------------- карусель
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Инициализация первого слайдера (блок с .block-slider)
-  initSlider({
-    containerSelector: '.block-slider',
-    slideSelector: '.box-img',
-    prevBtnSelector: '.nav__slider-prev',
-    nextBtnSelector: '.nav__slider-next'
-  });
-
-  // Инициализация второго слайдера (блок Наши работы)
-  initSlider({
-    containerSelector: '.container-works',
-    slideSelector: '.works-img',
-    prevBtnSelector: '.nav__works-prev',
-    nextBtnSelector: '.nav__works-next'
-  });
-
-  // Универсальная функция для инициализации слайдера
-  function initSlider(config) {
-    const slides = document.querySelectorAll(config.slideSelector);
-    const containerSlider = document.querySelector(config.containerSelector);
-    const prevBtn = document.querySelector(config.prevBtnSelector);
-    const nextBtn = document.querySelector(config.nextBtnSelector);
-
-    // Если элементов нет - выходим
-    if (!slides.length || !containerSlider) return;
-
-    let currentIndex = 0;
-    const gap = 20; // 2rem в пикселях
-
-    // Функция обновления слайдов
-    function updateSlider() {
-      const slideWidth = slides[0].offsetWidth;
-      
-      setTimeout(() => {
-        containerSlider.scrollTo({
-          left: currentIndex * (slideWidth + gap),
-          behavior: 'smooth'
-        });
-      }, 150);
-
-      // Блокировка кнопок на крайних слайдах
-      if (prevBtn && nextBtn) {
-        prevBtn.style.opacity = currentIndex === 0 ? "0.5" : "1";
-        nextBtn.style.opacity = currentIndex === slides.length - 1 ? "0.5" : "1";
-        prevBtn.style.pointerEvents = currentIndex === 0 ? "none" : "auto";
-        nextBtn.style.pointerEvents = currentIndex === slides.length - 1 ? "none" : "auto";
-      }
-    }
-
-    // Обработчик кнопки "Вперед"
-    if (nextBtn) {
-      nextBtn.addEventListener("click", function () {
-        if (currentIndex < slides.length - 1) {
-          currentIndex++;
-          updateSlider();
-        }
-      });
-    }
-
-    // Обработчик кнопки "Назад"
-    if (prevBtn) {
-      prevBtn.addEventListener("click", function () {
-        if (currentIndex > 0) {
-          currentIndex--;
-          updateSlider();
-        }
-      });
-    }
-
-    // Обработчик клика по слайду (делает его активным)
-    slides.forEach((slide, index) => {
-      slide.addEventListener("click", function () {
-        currentIndex = index;
-        updateSlider();
-      });
-    });
-    
-    // Для Webkit браузеров - горизонтальная прокрутка колесиком
-    containerSlider.addEventListener('wheel', function(e) {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        containerSlider.scrollLeft += e.deltaY;
-      }
-    }, { passive: false });
-
-    // Инициализация слайдера
-    updateSlider();
-
-    // Обновление при изменении размера окна
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(updateSlider, 250);
-    });
-  }
-});
-
 // -------------- для блока с вопросами
 document.addEventListener('DOMContentLoaded', function() {
     const surveyData = {
@@ -500,7 +399,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Блокируем скролл страницы, но НЕ скрываем её
     document.body.style.overflow = 'hidden';
     this.style.display= 'none';
-
   });
   
   // Закрытие меню
