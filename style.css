@@ -271,12 +271,21 @@
   padding: 1.2rem 6.5rem;
 
   font-size: 1.6rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+    padding: 1.2rem 2.7rem;
+  }
 }
 .section__link {
   font-weight: 600;
   font-size: 1.6rem;
 
   color: var(--color-orange);
+
+  @media (max-width: 768px) {
+    font-size: 1.4rem;
+  }
 }
 
 /* Класс для показанных изображений */
@@ -489,7 +498,7 @@
   height: 40rem;
 
   @media (max-width: 768px) {
-    height: 22rem;
+    height: 32rem;
   }
 
   img {
@@ -1326,6 +1335,11 @@
 .container-present {
   display: flex;
   gap: 2.4rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
 }
 .block-present__img {
   display: flex;
@@ -1333,12 +1347,17 @@
   gap: 1.2rem;
 
   @media (max-width: 768px) {
-    display: none;
+    flex-direction: unset;
   }
 }
 .present-box__img {
   width: 32rem;
   height: 32rem;
+
+  @media (max-width: 768px) {
+    width: unset;
+    height: 16rem;
+  }
 }
 .block-present__middle {
   width: 61.5rem;
@@ -1349,4 +1368,8 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: 768px) {
+    width: unset;
+  }
 }
