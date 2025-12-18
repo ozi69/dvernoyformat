@@ -169,7 +169,7 @@
 
   padding: 2.4rem;
   border-radius: var(--border-r24);
-  height: 19rem;
+  height: 16rem;
 }
 .card-title {
   font-size: 2.4rem;
@@ -179,7 +179,7 @@
   letter-spacing: -1%;
 
   @media (max-width: 768px) {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 }
 .card-text {
