@@ -89,26 +89,12 @@ input[type="search"]::-ms-clear {
   flex: 1 1 auto;
 }
 
-body {
-  padding-top: 12rem;
-
-  @media (max-width: 768px) {
-    padding-top: 5rem;
-  }
-}
-
 html,
 body {
   height: 100%;
   line-height: 1;
   font-family: Inter Tight;
-
   font-size: 0.6944444vw;
-
-  @media (max-width: 768px) {
-    font-size: 1.5625vw;
-    font-size: calc((100 / 375) * 10vw);
-  }
 }
 
 .wrapper {
@@ -118,29 +104,21 @@ body {
   flex-direction: column;
 }
 
+body {
+  padding-top: 12rem;
+}
+
 ._container {
   padding: 9rem 7.2rem;
   position: relative;
-
-  @media (max-width: 768px) {
-    padding: 4.5rem 1.6rem;
-  }
 }
 ._container-alt {
   padding: 0rem 7.2rem;
   position: relative;
-
-  @media (max-width: 768px) {
-    padding: 4.5rem 1.6rem;
-  }
 }
 ._container-alt2 {
   padding: 9rem 14rem;
   position: relative;
-
-  @media (max-width: 768px) {
-    padding: 4.5rem 1.6rem;
-  }
 }
 .header {
   padding: 2rem 7.5rem;
@@ -150,10 +128,6 @@ body {
   left: 0;
   z-index: 1000;
   background-color: var(--color-white);
-
-  @media (max-width: 768px) {
-    padding: 1rem 1.6rem;
-  }
 }
 .btn-primary {
   border-radius: var(--border-r32);
@@ -161,14 +135,8 @@ body {
   background-color: var(--color-white);
   padding: 1.4rem 4rem;
   color: var(--color-orange);
-
   font-weight: 600;
-
   transition: all 0.3s ease;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem 3rem;
-  }
 }
 .btn-primary:hover {
   background-color: var(--color-orange);
@@ -185,17 +153,10 @@ body {
   background-color: var(--color-orange);
   padding: 1.4rem 4rem;
   color: var(--color-white);
-
   font-weight: 600;
-
   display: flex;
   align-items: center;
-
   transition: all 0.3s ease;
-
-  @media (max-width: 768px) {
-    padding: 1.5rem 3rem;
-  }
 }
 .btn-second:hover {
   background-color: var(--color-orange-alt);
@@ -204,4 +165,41 @@ body {
 .btn-second:active {
   background-color: var(--color-orange-alt2);
   color: var(--color-white);
+}
+
+/* Медиазапросы */
+@media (max-width: 768px) {
+  body {
+    padding-top: 5rem;
+  }
+  
+  html,
+  body {
+    font-size: 1.5625vw;
+    font-size: calc((100 / 375) * 10vw);
+  }
+  
+  ._container {
+    padding: 4.5rem 1.6rem;
+  }
+  
+  ._container-alt {
+    padding: 4.5rem 1.6rem;
+  }
+  
+  ._container-alt2 {
+    padding: 4.5rem 1.6rem;
+  }
+  
+  .header {
+    padding: 1rem 1.6rem;
+  }
+  
+  .btn-primary {
+    padding: 1.5rem 3rem;
+  }
+  
+  .btn-second {
+    padding: 1.5rem 3rem;
+  }
 }
