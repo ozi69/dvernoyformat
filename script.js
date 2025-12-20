@@ -386,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const burgerMenu = document.querySelector('.burger-menu');
   const mobileMenu = document.querySelector('.mobile-menu');
   const mobileMenuClose = document.querySelector('.mobile-menu__close');
-  const overlay = document.querySelector('.mobile-menu-overlay');
   const mobileMenuLinks = document.querySelectorAll('.mobile-menu a');
   const menuListBtn = document.querySelector(".menu-list__btn")
   const menuListCatalog = document.querySelector(".menu-list__catalog")
@@ -395,7 +394,6 @@ document.addEventListener('DOMContentLoaded', function() {
   burgerMenu.addEventListener('click', function() {
     this.classList.toggle('active');
     mobileMenu.classList.toggle('active');
-    overlay.classList.toggle('active');
     // Блокируем скролл страницы, но НЕ скрываем её
     document.body.style.overflow = 'hidden';
     this.style.display= 'none';
@@ -406,7 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Убираем active у всех элементов
     burgerMenu.classList.remove('active');
     mobileMenu.classList.remove('active');
-    overlay.classList.remove('active');
     // Возвращаем скролл страницы
     document.body.style.overflow = '';
     burgerMenu.style.display = 'flex';
@@ -418,7 +415,6 @@ document.addEventListener('DOMContentLoaded', function() {
   })
   
   mobileMenuClose.addEventListener('click', closeMenu);
-  overlay.addEventListener('click', closeMenu);
   
   // Закрытие меню при клике на ссылку
   mobileMenuLinks.forEach(link => {
